@@ -1,0 +1,33 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextField?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="sample.Controller">
+
+    <TextArea fx:id="queryInput" prefHeight="100" promptText="Wpisz zapytanie SQL..."/>
+
+    <TextArea fx:id="indexInfo" prefHeight="100" editable="false" wrapText="true" promptText="Informacje o nałożonych indeksach"/>
+
+    <HBox spacing="10"> <!-- Zastosowanie HBox dla przycisku i pola TextField -->
+        <Button text="Wykonaj zapytanie" onAction="#executeQuery"/>
+        <TextField fx:id="queryCount" promptText="Ile razy?" prefWidth="100"/>
+        <Label fx:id="queryTime" text="Czas wykonywania: 0 ms"/>
+        <Label fx:id="averageQueryTime" text="Średni czas wykonania zapytania: 0 ms"/>
+    </HBox>
+
+
+    <TextArea fx:id="queryResults" prefHeight="200" editable="false" wrapText="true"/>
+    <TextArea fx:id="queryHistory" prefHeight="200" editable="false" wrapText="true" promptText="Historia wykonanych zapytań"/>
+
+
+    <Button text="Zapisz historię do pliku" onAction="#saveHistoryToFile"/>
+    <Button text="Eksportuj wyniki do CSV" onAction="#exportHistoryToCSV"/>
+</VBox>
