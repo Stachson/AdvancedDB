@@ -24,7 +24,7 @@
     </HBox>
 
 
-    <TextArea fx:id="queryResults" prefHeight="200" editable="false" wrapText="true"/>
+    <TextArea fx:id="queryResults" prefHeight="200" editable="false" wrapText="true" />
     <TextArea fx:id="queryHistory" prefHeight="200" editable="false" wrapText="true" promptText="Historia wykonanych zapytań"/>
 
 

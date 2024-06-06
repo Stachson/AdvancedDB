@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ZaawansowaneBazyDanychJavaFX:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ZaawansowaneBazyDanychJavaFX_jar</output-path>
+    <root id="archive" name="ZaawansowaneBazyDanychJavaFX.jar">
+      <element id="module-output" name="ZaawansowaneBazyDanychJavaFX" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/javafx-sdk-17.0.11/lib/javafx-swt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/javafx-sdk-17.0.11/lib/javafx.media.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/javafx-sdk-17.0.11/lib/javafx.swing.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/javafx-sdk-17.0.11/lib/javafx.controls.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/javafx-sdk-17.0.11/lib/javafx.graphics.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/javafx-sdk-17.0.11/lib/javafx.web.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/postgresql-42.6.2 (1).jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/javafx-sdk-17.0.11/lib/javafx.fxml.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/javafx-sdk-17.0.11/lib/javafx.base.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

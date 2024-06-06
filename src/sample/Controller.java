@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Controller {
 
@@ -173,13 +175,18 @@ public class Controller {
                 return;
             }
 
-
+            String firstTableName = extractTableNameFromQuery(query); /////////dodane
             startTime = System.currentTimeMillis();
 
             for(int i = 0;i < count;i++) {
 
                 Statement statement = connection.createStatement();
+                statement.execute("DISCARD ALL"); ///////////dodane
+                statement.execute("SELECT pg_prewarm('" + firstTableName + "', 'prefetch');");
                 ResultSet resultSet = statement.executeQuery(query);
+                //ResultSet resultSet = statement.executeQuery("EXPLAIN ANALYZE " + query);
+
+                //
 
                 results = new StringBuilder();
                 ResultSetMetaData metaData = resultSet.getMetaData();
@@ -245,6 +252,25 @@ public class Controller {
         int tableStart = upperQuery.indexOf("ON") + 3; // Start position after "ON "
         int tableEnd = upperQuery.indexOf("(", tableStart);
         return query.substring(tableStart, tableEnd).trim();
+    }
+
+    public static String extractTableNameFromQuery(String query) {
+        String tableName = null;
+
+        // Usunięcie dodatkowych białych znaków i zmiana na wielkie litery dla łatwiejszej analizy
+        query = query.trim().toUpperCase();
+
+        // Wyrażenie regularne do wyciągnięcia nazwy tabeli z zapytania SELECT
+        String regex = "FROM\\s+([A-Z0-9_\\.]+)";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(query);
+
+        if (matcher.find()) {
+            tableName = matcher.group(1);
+        }
+
+        return tableName;
     }
 }
 
