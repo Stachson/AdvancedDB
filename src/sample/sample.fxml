@@ -27,7 +27,9 @@
     <TextArea fx:id="queryResults" prefHeight="200" editable="false" wrapText="true" />
     <TextArea fx:id="queryHistory" prefHeight="200" editable="false" wrapText="true" promptText="Historia wykonanych zapytań"/>
 
+    <HBox spacing="10">
+        <Button text="Zapisz historię do pliku tekstowego" onAction="#saveHistoryToFile"/>
+        <Button text="Zapisz historię do pliku CSV" onAction="#exportHistoryToCSV"/>
+    </HBox>
 
-    <Button text="Zapisz historię do pliku" onAction="#saveHistoryToFile"/>
-    <Button text="Eksportuj wyniki do CSV" onAction="#exportHistoryToCSV"/>
 </VBox>

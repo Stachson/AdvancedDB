@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -123,7 +125,7 @@ public class Controller {
         String query = queryInput.getText();
         Integer count = 1;
         StringBuilder results = new StringBuilder();
-        long executionTime;
+        //long executionTime;
         long startTime;
         long endTime;
 
@@ -175,15 +177,23 @@ public class Controller {
                 return;
             }
 
-            String firstTableName = extractTableNameFromQuery(query); /////////dodane
-            startTime = System.currentTimeMillis();
+            String firstTableName = extractTableNameFromQuery(query);
+            long totalExecutionTime = 0;
+            List<Long> executionTimes = new ArrayList<>();
+            //startTime = System.currentTimeMillis();
 
             for(int i = 0;i < count;i++) {
 
                 Statement statement = connection.createStatement();
                 statement.execute("DISCARD ALL"); ///////////dodane
                 statement.execute("SELECT pg_prewarm('" + firstTableName + "', 'prefetch');");
+
+                startTime = System.currentTimeMillis();
                 ResultSet resultSet = statement.executeQuery(query);
+                endTime = System.currentTimeMillis();
+                long executionTime = endTime - startTime;
+                executionTimes.add(executionTime);
+                totalExecutionTime += executionTime;
                 //ResultSet resultSet = statement.executeQuery("EXPLAIN ANALYZE " + query);
 
                 //
@@ -204,16 +214,17 @@ public class Controller {
                     results.append("\n");
                 }
             }
-            endTime = System.currentTimeMillis();
-            executionTime = endTime - startTime;
-
+            //endTime = System.currentTimeMillis();
+            //executionTime = endTime - startTime;
+            long averageExecutionTime = totalExecutionTime / count;
             queryResults.setText(results.toString());
-            queryTime.setText("Całkowity czas wykonywania: " + executionTime + " ms");
-            averageQueryTime.setText("Średni czas wykonania: " + executionTime/count + " ms");
+            queryTime.setText("Całkowity czas wykonywania: " + totalExecutionTime + " ms");
+            averageQueryTime.setText("Średni czas wykonania: " + averageExecutionTime + " ms");
 
             queryHistory.appendText("Zapytanie: " + query + "\n");
             queryHistory.appendText("Ilość powtórzeń: " + count + "\n");
-            queryHistory.appendText("Całkowity czas: " + executionTime + " ms, Średni czas: " + (executionTime / count) + " ms\n");
+            queryHistory.appendText("Czas pojedynczych zapytań(ms): " + executionTimes.toString() + "\n");
+            queryHistory.appendText("Całkowity czas: " + totalExecutionTime + " ms, Średni czas: " + averageExecutionTime + " ms\n");
             queryHistory.appendText("------------------------------------------------\n\n");
 
             if (query.toUpperCase().contains("CREATE INDEX") || query.toUpperCase().contains("ALTER TABLE") && query.toUpperCase().contains("ADD INDEX")) {
